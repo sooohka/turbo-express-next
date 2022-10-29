@@ -1,7 +1,19 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: ["airbnb-base", "next", "turbo", "prettier"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: "module",
+  },
+  plugins: ["@typescript-eslint"],
   rules: {
-    "@next/next/no-html-link-for-pages": "off",
-    "react/jsx-key": "off",
+    "no-console": ["warn", { allow: ["warn", "error"] }],
+    // imports
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
   },
 };

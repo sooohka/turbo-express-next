@@ -10,6 +10,12 @@
     },
     "dev": {
       "cache": false
+    },
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false
     }
-  }
+  },
+  "globalDependencies": [".env"],
+  "globalEnv": ["DB_USER", "DB_PASSWORD", "DB_HOST", "DB_DATABASE", "DB_PORT"]
 }
