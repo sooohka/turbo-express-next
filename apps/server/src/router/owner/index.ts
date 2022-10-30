@@ -1,30 +1,10 @@
-import Express, { Router } from "express";
-import client from "../../db";
-import { CustomError } from "../../error";
+import express from "express";
+import OwnerController from "../../controller/OwnerController";
 
-const router = Express.Router();
-
-router.get("/", async (req, res) => {
-  const d = await client.query("SELECT * FROM owners");
-  const owners = d.rows;
-  res.send(owners);
-});
-
-router.get("/:id", async (req, res, next) => {
-  try {
-    const d = await client.query("SELECT * FROM owners WHERE ownerid=$1", [
-      req.params.id,
-    ]);
-    const pet = d.rows;
-    if (pet.length === 0) {
-      throw new CustomError("no pet owner found", 404);
-    }
-    res.send(pet);
-  } catch (e) {
-    next(e);
-  }
-});
-
-const ownerRouter: [string, Router] = ["/owners", router];
-
+const router = express.Router();
+const ownerRouter = (ownerController: OwnerController) => {
+  router.get("/", ownerController.ownerList);
+  router.get("/:id", ownerController.ownerDetails);
+  return router;
+};
 export default ownerRouter;

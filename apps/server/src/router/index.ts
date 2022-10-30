@@ -1,5 +1,13 @@
 import { Router } from "express";
-import pet from "./pet";
-import owner from "./owner";
+import Container from "../container";
+import ownerRouter from "./owner";
+import petRouter from "./pet";
 
-export const routes = new Map<string, Router>([pet, owner]);
+const router = Router();
+const routes = (container: Container) => {
+  router.use("/pets", petRouter(container.get("petController")));
+  router.use("/owners", ownerRouter(container.get("ownerController")));
+  return router;
+};
+
+export default routes;
